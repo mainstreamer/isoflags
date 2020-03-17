@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Exceptions;
+namespace Rteeom\Exceptions;
 
-use App\CountryCodeValidator;
+use Rteeom\CountryCodeValidator;
 
 class IsoFlagGeneratorException extends \Exception
 {

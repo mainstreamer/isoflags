@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Rteeom;
 
 class CountryCodeValidator
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace Rteeom;
 
-use App\CountryCodeValidator;
-use App\Exceptions\IsoFlagGeneratorException;
+use Rteeom\CountryCodeValidator;
+use Rteeom\Exceptions\IsoFlagGeneratorException;
 
 class FlagsGenerator
 {

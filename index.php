@@ -2,6 +2,6 @@
 
 require 'vendor/autoload.php';
 
-$app = new \App\FlagsGenerator(new \App\CountryCodeValidator());
+$app = new \Rteeom\FlagsGenerator(new \Rteeom\CountryCodeValidator());
 
 echo $app->getEmojiFlag('ua');

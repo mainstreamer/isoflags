@@ -1,5 +1,5 @@
 {
-    "name": "rteeom/isoflags",
+    "name": "mainstreamer/isoflags",
     "description": "library for easy emoji flags generation from iso country codes",
     "type": "library",
     "license": "MIT",
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "Rteeom\\": "src/"
         }
     }
 }

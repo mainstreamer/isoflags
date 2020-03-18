@@ -33,5 +33,3 @@ class FlagsGenerator
         throw new IsoFlagGeneratorException();
     }
 }
-
-//throw new \ErrorException('invalid iso country code, please refer to');

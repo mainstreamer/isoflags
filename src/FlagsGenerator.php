@@ -2,19 +2,18 @@
 
 namespace Rteeom;
 
-use Rteeom\CountryCodeValidator;
 use Rteeom\Exceptions\IsoFlagGeneratorException;
 
 class FlagsGenerator
 {
     /**
-     * @var \App\CountryCodeValidator
+     * @var CountryCodeValidator
      */
     private CountryCodeValidator $validator;
 
-    public function __construct(CountryCodeValidator $validator)
+    public function __construct()
     {
-        $this->validator = $validator;
+        $this->validator = new CountryCodeValidator();
     }
 
     /**

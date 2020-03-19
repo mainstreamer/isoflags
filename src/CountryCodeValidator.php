@@ -5,9 +5,9 @@ namespace Rteeom;
 class CountryCodeValidator
 {
     /**
+     * requires ISO 3166-1 country code e.g. GB
      * @param string $isoCountryCode
      * @return bool
-     * ISO 3166-1
      */
     public function isValid(string $isoCountryCode): bool
     {

@@ -6,9 +6,6 @@ use Rteeom\Exceptions\IsoFlagGeneratorException;
 
 class FlagsGenerator
 {
-    /**
-     * @var CountryCodeValidator
-     */
     private CountryCodeValidator $validator;
 
     public function __construct()
@@ -23,6 +20,15 @@ class FlagsGenerator
      */
     public function getEmojiFlag(string $isoCountryCode): string
     {
+        if (null === $flag = $this->getEmojiFlagOrNull($isoCountryCode)) {
+            throw new IsoFlagGeneratorException();
+        }
+
+        return $flag;
+    }
+
+    public function getEmojiFlagOrNull(string $isoCountryCode): ?string
+    {
         if ($this->validator->isValid($isoCountryCode)) {
             $first = dechex(ord($isoCountryCode[0])+127365);
             $second = dechex(ord($isoCountryCode[1])+127365);
@@ -30,6 +36,6 @@ class FlagsGenerator
             return mb_convert_encoding("&#x$first;"."&#x$second;","UTF-8","HTML-ENTITIES");
         }
 
-        throw new IsoFlagGeneratorException();
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rteeom;
+namespace Rteeom\EmojiISOFlagsBundle\Service;
 
 class CountryCodeValidator
 {

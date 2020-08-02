@@ -6,6 +6,12 @@ use Rteeom\Exceptions\IsoFlagGeneratorException;
 
 class FlagsGenerator
 {
+    private $flagService;
+
+    public function __construct()
+    {
+        $this->flagService = new \Rteeom\FlagsGenerator();
+    }
     /**
      * @param string $isoCountryCode
      * @return string
@@ -13,7 +19,9 @@ class FlagsGenerator
      */
     public function getEmojiFlag(string $isoCountryCode): string
     {
-        if (null === $flag = $this->getEmojiFlagOrNull($isoCountryCode)) {
+//        ;
+//        if (null === $flag = $this->getEmojiFlagOrNull($isoCountryCode)) {
+        if (null === $flag = $this->flagService->getEmojiFlagOrNull($isoCountryCode)) {
 //            throw new IsoFlagGeneratorException();
             throw new \Exception();
         }
@@ -23,12 +31,19 @@ class FlagsGenerator
 
     public function getEmojiFlagOrNull(string $isoCountryCode): ?string
     {
-        if ($this->isValid($isoCountryCode)) {
+        if ($this->flagService->isValid($isoCountryCode)) {
             $first = dechex(ord($isoCountryCode[0])+127365);
             $second = dechex(ord($isoCountryCode[1])+127365);
 
             return mb_convert_encoding("&#x$first;"."&#x$second;","UTF-8","HTML-ENTITIES");
         }
+
+//        if ($this->isValid($isoCountryCode)) {
+//            $first = dechex(ord($isoCountryCode[0])+127365);
+//            $second = dechex(ord($isoCountryCode[1])+127365);
+//
+//            return mb_convert_encoding("&#x$first;"."&#x$second;","UTF-8","HTML-ENTITIES");
+//        }
 
         return null;
     }

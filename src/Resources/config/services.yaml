@@ -1,6 +1,5 @@
 services:
-    emoji_iso_flags:
-        Rteeom\EmojiISOFlagsBundle\Service\FlagsGenerator:
-            tags:
-                - rteeom.service
+    Rteeom\EmojiISOFlagsBundle\Service\FlagsGenerator:
+        tags:
+            - rteeom.service
                 

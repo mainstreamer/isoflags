@@ -1,6 +1,6 @@
 <?php
 
-namespace Rteeom\Exceptions;
+namespace Rteeom\EmojiISOFlagsBundle\Exceptions;
 
 class IsoFlagGeneratorException extends \ErrorException
 {

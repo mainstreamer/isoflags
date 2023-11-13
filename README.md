@@ -16,7 +16,7 @@ require 'vendor/autoload.php';
 
 $generator = new \Rteeom\FlagsGenerator();
 
-echo $generator->getEmojiFlag('ua'); // 🇺🇦
+echo $generator->getEmojiFlag('gb'); // 🇬🇧
 
 // or 
 

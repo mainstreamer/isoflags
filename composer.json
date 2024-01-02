@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Rteeom\\": "src/"
+            "Rteeom\\FlagsGenerator\\": "src/"
         }
     },
     "require-dev": {

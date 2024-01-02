@@ -1,6 +1,6 @@
 <?php
 
-namespace Rteeom\Exceptions;
+namespace Rteeom\FlagsGenerator\Exceptions;
 
 class IsoFlagGeneratorException extends \ErrorException
 {

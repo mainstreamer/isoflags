@@ -1,8 +1,8 @@
 <?php
 
-namespace Rteeom;
+namespace Rteeom\FlagsGenerator;
 
-use Rteeom\Exceptions\IsoFlagGeneratorException;
+use Rteeom\FlagsGenerator\Exceptions\IsoFlagGeneratorException;
 
 class FlagsGenerator
 {

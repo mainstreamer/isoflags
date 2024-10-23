@@ -44,4 +44,19 @@ class FlagsGenerator
 
         return null;
     }
+
+    public static function getAvailableCodes(): array
+    {
+        $result = [];
+        foreach (CountryCodeValidator::PATTERNS as $pattern) {
+            $prefix = $pattern[0];
+            // remove first letter and parentheses, split by | symbol
+            $options = explode('|', str_replace(['(',')'], [''], substr($pattern, 1)));
+            foreach ($options as $letter) {
+                $result[] = $prefix.$letter;
+            }
+        }
+
+        return $result;
+    }
 }

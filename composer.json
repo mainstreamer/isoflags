@@ -27,7 +27,7 @@
     },
     "scripts": {
         "test": "phpunit",
-        "test:coverage": "phpunit --coverage-html coverage/html --coverage-text",
+        "test:coverage": "php -d pcov.enabled=1 phpunit --coverage-html coverage/html --coverage-text",
         "psalm": "psalm --no-cache",
         "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
         "cs:check": "php-cs-fixer check --diff --verbose",

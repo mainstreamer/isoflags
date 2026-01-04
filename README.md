@@ -185,32 +185,43 @@ All tests must pass before releasing to production.
 
 ### Code Coverage
 
-To generate code coverage reports locally, you need to install a coverage driver (PCOV or Xdebug):
+**Coverage is automatically generated in GitHub Actions** - no local setup required!
 
+#### Local Coverage (Optional)
+
+To generate coverage reports locally, install PCOV or Xdebug:
+
+**Fedora/RHEL:**
 ```bash
-# Install PCOV (recommended - faster)
+sudo dnf install php-pecl-pcov
+```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install php-pcov
+```
+
+**macOS:**
+```bash
 pecl install pcov
-
-# Or install Xdebug
-pecl install xdebug
 ```
 
-Then run tests with coverage:
+Then run:
 
 ```bash
-# Generate HTML coverage report
-./vendor/bin/phpunit --coverage-html coverage/html
+# Text output
+make coverage-text
 
-# Generate text coverage report
-./vendor/bin/phpunit --coverage-text
+# HTML report
+make coverage
 
-# Generate Clover XML (for CI/CD)
-./vendor/bin/phpunit --coverage-clover coverage.xml
+# Or use composer
+composer test:coverage
 ```
 
-The HTML coverage report will be available at `coverage/html/index.html`.
+**Note:** Local coverage is optional. GitHub Actions automatically generates and uploads coverage on every push.
 
-**Note:** Code coverage is automatically generated and reported via GitHub Actions on every push and pull request.
+See [`.github/LOCAL_COVERAGE_SETUP.md`](.github/LOCAL_COVERAGE_SETUP.md) for detailed setup instructions.
 
 ## How It Works
 

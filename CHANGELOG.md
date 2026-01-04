@@ -7,22 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-01-04
+
 ### Added
 - Comprehensive README.md with full API documentation and usage examples
 - MIT License file
 - CHANGELOG.md to track version history
 - CONTRIBUTING.md with detailed contribution guidelines
-- GitHub Actions workflow for automated testing and code coverage
-- Code coverage configuration in PHPUnit
+- GitHub Actions workflow (CI Pipeline) for automated testing and code coverage
+- Code coverage configuration in PHPUnit with PCOV support
+- Codecov integration with `codecov.yml` configuration
 - Coverage badges in README (Codecov integration)
 - CI/CD badges in README (GitHub Actions, PHP version)
-- Code quality improvements with strict type declarations across all files
+- Code quality tools integration:
+  - Psalm (static analysis) with level 7
+  - PHP CS Fixer (code style)
+  - PHPCS (PSR-12 compliance)
+- Makefile with shortcuts for all development tasks
+- Composer scripts for QA tasks (`test`, `psalm`, `cs:fix`, `cs:check`, `phpcs`, `qa`)
+- Local coverage setup documentation (`.github/LOCAL_COVERAGE_SETUP.md`)
+- Codecov troubleshooting guide (`.github/CODECOV_TROUBLESHOOTING.md`)
+- Tests for deprecated methods and exception paths
+- 100% code coverage achievement (257 tests, 1018 assertions)
 - HTML, Clover XML, and text coverage report generation
-- Coverage directory added to .gitignore
+- Coverage and cache directories added to .gitignore
 
 ### Fixed
 - Added missing `declare(strict_types=1)` to all source files for consistency
 - Removed trailing comma syntax error in FlagsGeneratorException constructor
+- Code style fixes applied by PHP CS Fixer (PSR-12 compliance)
+- Test file namespace added for PSR-4 compliance
+- PCOV automatic enabling in Makefile and composer scripts
+
+### Changed
+- Updated phpunit.xml.dist to generate coverage reports in multiple formats
+- GitHub Actions workflow renamed from "Tests" to "CI Pipeline"
+- Enhanced error messages in Makefile for missing coverage drivers
 
 ## [1.3.0] - 2026-01-04
 

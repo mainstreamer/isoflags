@@ -2,6 +2,8 @@
 
 This guide explains how to set up Codecov for the IsoFlags repository to get code coverage reporting and badges working.
 
+> **⚠️ Badge showing "unknown"?** See [CODECOV_TROUBLESHOOTING.md](CODECOV_TROUBLESHOOTING.md) for detailed troubleshooting steps.
+
 ## What is Codecov?
 
 Codecov is a code coverage reporting tool that integrates with GitHub to provide:

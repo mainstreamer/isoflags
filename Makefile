@@ -21,12 +21,16 @@ test: ## Run PHPUnit tests
 test-filter: ## Run specific test: make test-filter FILTER=testMethodName
 	@vendor/bin/phpunit --filter $(FILTER)
 
-coverage: ## Generate code coverage report (HTML)
-	@vendor/bin/phpunit --coverage-html coverage/html --coverage-text
+coverage: ## Generate code coverage report (HTML) - requires PCOV or Xdebug
+	@echo "Checking for coverage driver..."
+	@php -r "if (!extension_loaded('pcov') && !extension_loaded('xdebug')) { echo 'Error: No coverage driver found. Install PCOV or Xdebug.\n'; echo 'Run: sudo dnf install php-pecl-pcov\n'; exit(1); }"
+	@php -d pcov.enabled=1 vendor/bin/phpunit --coverage-html coverage/html --coverage-text
 	@echo "Coverage report: coverage/html/index.html"
 
-coverage-text: ## Show code coverage in terminal
-	@vendor/bin/phpunit --coverage-text
+coverage-text: ## Show code coverage in terminal - requires PCOV or Xdebug
+	@echo "Checking for coverage driver..."
+	@php -r "if (!extension_loaded('pcov') && !extension_loaded('xdebug')) { echo '\nError: No coverage driver found.\n'; echo 'Install PCOV: sudo dnf install php-pecl-pcov\n'; echo 'Or Xdebug: sudo dnf install php-pecl-xdebug\n\n'; echo 'Note: Coverage works automatically in CI/GitHub Actions.\n'; exit(1); }"
+	@php -d pcov.enabled=1 vendor/bin/phpunit --coverage-text
 
 psalm: ## Run Psalm static analysis
 	@vendor/bin/psalm --no-cache

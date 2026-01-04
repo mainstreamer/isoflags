@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 100% code coverage achievement (257 tests, 1018 assertions)
 - HTML, Clover XML, and text coverage report generation
 - Coverage and cache directories added to .gitignore
+- Native UTF-8 encoding implementation using PHP's `pack()` function
 
 ### Fixed
 - Added missing `declare(strict_types=1)` to all source files for consistency
@@ -43,6 +44,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated phpunit.xml.dist to generate coverage reports in multiple formats
 - GitHub Actions workflow renamed from "Tests" to "CI Pipeline"
 - Enhanced error messages in Makefile for missing coverage drivers
+- Replaced `mb_convert_encoding()` with native UTF-8 byte encoding for Regional Indicator Symbols
+- Updated "How It Works" documentation to reflect native implementation
+
+### Removed
+- **ext-mbstring dependency** - Library is now completely dependency-free (PHP 8.4+ only)
 
 ## [1.3.0] - 2026-01-04
 

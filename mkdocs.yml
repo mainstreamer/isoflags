@@ -1,0 +1,81 @@
+site_name: IsoFlags
+site_description: Modern PHP library for generating emoji flags from ISO country codes
+site_author: Rteeom
+site_url: https://mainstreamer.github.io/isoflags
+
+repo_name: mainstreamer/isoflags
+repo_url: https://github.com/mainstreamer/isoflags
+edit_uri: edit/master/docs/
+
+theme:
+  name: material
+  palette:
+    # Light mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quick-start.md
+  - Usage:
+    - Basic Usage: usage/basic-usage.md
+    - Extended Codes: usage/extended-codes.md
+    - Validation: usage/validation.md
+    - Exception Handling: usage/exceptions.md
+  - API Reference: api-reference.md
+  - Development:
+    - Contributing: development/contributing.md
+    - Running Tests: development/testing.md
+    - Code Coverage: development/coverage.md
+  - Changelog: changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/mainstreamer/isoflags
+    - icon: fontawesome/brands/php
+      link: https://packagist.org/packages/rteeom/isoflags
+
+copyright: Copyright &copy; 2026 Rteeom - MIT License

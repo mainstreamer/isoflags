@@ -11,17 +11,11 @@ A modern PHP library for generating emoji flags from ISO 3166-1 alpha-2 country 
 
 ## Features
 
-- Generate emoji flags from ISO 3166-1 alpha-2 country codes
-- Support for extended regional codes (Kosovo, Ascension Island, etc.)
-- Type-safe with PHP 8.4 enums
-- Static and instance methods available
-- Comprehensive test coverage
-- Zero dependencies (except ext-mbstring)
-
-## Requirements
-
-- PHP 8.4 or higher
-- ext-mbstring
+- 🚀 Generate emoji flags from ISO country codes
+- 🌍 Extended regional codes support (Kosovo, Ascension Island, etc.)
+- 🛡️ Type-safe with PHP 8.4 enums
+- ✅ 100% test coverage
+- 📦 **Zero dependencies** - only requires PHP 8.4+
 
 ## Installation
 
@@ -29,151 +23,53 @@ A modern PHP library for generating emoji flags from ISO 3166-1 alpha-2 country 
 composer require rteeom/isoflags
 ```
 
-## Usage
+**Requirements:** PHP 8.4 or higher
 
-### Basic Usage
-
-#### Static Methods (Recommended)
+## Quick Start
 
 ```php
 use Rteeom\FlagsGenerator\FlagsGenerator;
 
-// Get flag (throws exception on invalid code)
+// Generate emoji flags
 echo FlagsGenerator::getFlag('gb'); // 🇬🇧
 echo FlagsGenerator::getFlag('ua'); // 🇺🇦
+echo FlagsGenerator::getFlag('us'); // 🇺🇸
 
-// Get flag or null (returns null on invalid code)
-echo FlagsGenerator::getFlagOrNull('us'); // 🇺🇸
-echo FlagsGenerator::getFlagOrNull('invalid'); // null
+// Safe usage (returns null for invalid codes)
+$flag = FlagsGenerator::getFlagOrNull('invalid'); // null
 ```
 
-#### Instance Methods (Deprecated, will be removed in v2.0)
-
-```php
-use Rteeom\FlagsGenerator\FlagsGenerator;
-
-$generator = new FlagsGenerator();
-
-echo $generator->getEmojiFlag('gb'); // 🇬🇧
-echo $generator->getEmojiFlagOrNull('ua'); // 🇺🇦
-```
-
-### Extended Codes
-
-The library supports both ISO 3166-1 standard codes and extended regional codes:
+### Extended Regional Codes
 
 ```php
 use Rteeom\FlagsGenerator\FlagsGenerator;
 use Rteeom\FlagsGenerator\Enums\CodeSet;
 
-// Standard ISO codes (default)
-echo FlagsGenerator::getFlag('us', CodeSet::ISO3166); // 🇺🇸
-
-// Extended codes (includes Kosovo, Ascension Island, etc.)
-echo FlagsGenerator::getFlag('xk', CodeSet::EXTENDED); // 🇽🇰 (Kosovo)
-echo FlagsGenerator::getFlag('ac', CodeSet::EXTENDED); // 🇦🇨 (Ascension Island)
-```
-
-#### Available Extended Codes
-
-In addition to all ISO 3166-1 alpha-2 codes, the following extended codes are supported:
-
-- `ac` - Ascension Island
-- `dg` - Diego Garcia
-- `ea` - Ceuta & Melilla
-- `ic` - Canary Islands
-- `ta` - Tristan da Cunha
-- `xk` - Kosovo
-
-### Get All Available Codes
-
-```php
-use Rteeom\FlagsGenerator\FlagsGenerator;
-use Rteeom\FlagsGenerator\Enums\CodeSet;
-
-// Get all ISO 3166-1 codes
-$isoCodes = FlagsGenerator::getAvailableCodes(CodeSet::ISO3166);
-// Returns: ['ad', 'ae', 'af', ...]
-
-// Get all codes including extended ones
-$allCodes = FlagsGenerator::getAvailableCodes(CodeSet::EXTENDED);
-// Returns: ['ad', 'ae', 'af', ..., 'ac', 'dg', 'ea', 'ic', 'ta', 'xk']
+// Kosovo, Ascension Island, and more
+echo FlagsGenerator::getFlag('xk', CodeSet::EXTENDED); // 🇽🇰
+echo FlagsGenerator::getFlag('ac', CodeSet::EXTENDED); // 🇦🇨
 ```
 
 ### Validation
 
 ```php
 use Rteeom\FlagsGenerator\CountryCodeValidator;
-use Rteeom\FlagsGenerator\Enums\CodeSet;
 
-// Validate ISO code
 $isValid = CountryCodeValidator::isValidCountryCode('gb'); // true
 $isValid = CountryCodeValidator::isValidCountryCode('invalid'); // false
-
-// Validate with extended codes
-$isValid = CountryCodeValidator::isValidCountryCode('xk', CodeSet::EXTENDED); // true
-$isValid = CountryCodeValidator::isValidCountryCode('xk', CodeSet::ISO3166); // false
 ```
 
-### Exception Handling
+## Documentation
 
-```php
-use Rteeom\FlagsGenerator\FlagsGenerator;
-use Rteeom\FlagsGenerator\Exceptions\FlagsGeneratorException;
+📚 **[Read the full documentation →](https://mainstreamer.github.io/isoflags)**
 
-try {
-    $flag = FlagsGenerator::getFlag('invalid-code');
-} catch (FlagsGeneratorException $e) {
-    echo $e->getMessage(); // "Invalid country code given invalid-code"
-}
-```
-
-## API Reference
-
-### FlagsGenerator
-
-#### Static Methods
-
-- `getFlag(string $isoCode, CodeSet $codeSet = CodeSet::ISO3166): string`
-  - Returns emoji flag for the given ISO code
-  - Throws `FlagsGeneratorException` if code is invalid
-
-- `getFlagOrNull(string $isoCode, CodeSet $codeSet = CodeSet::ISO3166): ?string`
-  - Returns emoji flag or null if code is invalid
-  - Safe alternative that doesn't throw exceptions
-
-- `getAvailableCodes(CodeSet $codeSet = CodeSet::ISO3166): array`
-  - Returns array of all available ISO codes for the specified code set
-
-#### Instance Methods (Deprecated)
-
-- `getEmojiFlag(string $isoCountryCode, CodeSet $codeSet = CodeSet::ISO3166): string`
-  - Deprecated: Use static `getFlag()` instead
-  - Will be removed in v2.0
-
-- `getEmojiFlagOrNull(string $isoCode, CodeSet $codeSet = CodeSet::ISO3166): ?string`
-  - Deprecated: Use static `getFlagOrNull()` instead
-  - Will be removed in v2.0
-
-### CountryCodeValidator
-
-- `isValidCountryCode(string $isoCountryCode, CodeSet $codeSet = CodeSet::ISO3166): bool`
-  - Validates if a country code is valid for the specified code set
-
-### Enums
-
-#### CodeSet
-
-- `CodeSet::ISO3166` - Standard ISO 3166-1 alpha-2 codes only
-- `CodeSet::EXTENDED` - ISO codes plus extended regional codes
+- [Installation Guide](https://mainstreamer.github.io/isoflags/getting-started/installation/)
+- [Quick Start](https://mainstreamer.github.io/isoflags/getting-started/quick-start/)
+- [Usage Examples](https://mainstreamer.github.io/isoflags/usage/basic-usage/)
+- [API Reference](https://mainstreamer.github.io/isoflags/api-reference/)
+- [Extended Codes](https://mainstreamer.github.io/isoflags/usage/extended-codes/)
 
 ## Development
-
-### Install Dependencies
-
-```bash
-composer install
-```
 
 ### Run Tests
 
@@ -181,86 +77,32 @@ composer install
 ./vendor/bin/phpunit
 ```
 
-All tests must pass before releasing to production.
-
-### Code Coverage
-
-**Coverage is automatically generated in GitHub Actions** - no local setup required!
-
-#### Local Coverage (Optional)
-
-To generate coverage reports locally, install PCOV or Xdebug:
-
-**Fedora/RHEL:**
-```bash
-sudo dnf install php-pecl-pcov
-```
-
-**Ubuntu/Debian:**
-```bash
-sudo apt-get install php-pcov
-```
-
-**macOS:**
-```bash
-pecl install pcov
-```
-
-Then run:
+### Code Quality
 
 ```bash
-# Text output
-make coverage-text
-
-# HTML report
-make coverage
-
-# Or use composer
-composer test:coverage
+make qa  # Run all quality checks
 ```
 
-**Note:** Local coverage is optional. GitHub Actions automatically generates and uploads coverage on every push.
-
-See [`.github/LOCAL_COVERAGE_SETUP.md`](.github/LOCAL_COVERAGE_SETUP.md) for detailed setup instructions.
-
-## How It Works
-
-The library converts two-letter country codes to emoji flags by transforming each letter into its corresponding Regional Indicator Symbol. The transformation works by:
-
-1. Converting each letter to its Unicode Regional Indicator Symbol
-2. Using HTML entity encoding and mbstring conversion
-3. Regional Indicator Symbols (U+1F1E6 to U+1F1FF) combine to form flag emojis
-
-For example, 'GB' becomes:
-- G → 🇬 (U+1F1EC)
-- B → 🇧 (U+1F1E7)
-- Combined: 🇬🇧
+See [Contributing Guide](https://mainstreamer.github.io/isoflags/development/contributing/) for details.
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes and version updates.
+See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
-
-- Setting up your development environment
-- Running tests and code coverage
-- Code quality standards
-- Pull request process
-- Commit message conventions
-
-Please ensure all tests pass before submitting a pull request.
-
-## Credits
-
-- Author: Rteeom
-- Email: mainstreamer@outlook.com
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## Support
 
-For issues and feature requests, please use the [GitHub issue tracker](https://github.com/mainstreamer/isoflags/issues).
+- 🐛 [Report bugs](https://github.com/mainstreamer/isoflags/issues)
+- 💡 [Request features](https://github.com/mainstreamer/isoflags/issues)
+- 📧 Email: mainstreamer@outlook.com
+
+---
+
+Made with ❤️ by [Rteeom](https://github.com/mainstreamer)

@@ -1,11 +1,10 @@
 <?php
 
 declare(strict_types=1);
-declare(strict_types=1);
 
 namespace Rteeom\FlagsGenerator\Exceptions;
 
-class FlagsGeneratorException extends \ErrorException
+final class FlagsGeneratorException extends \ErrorException
 {
     private const string MESSAGE = 'Invalid country code given';
 

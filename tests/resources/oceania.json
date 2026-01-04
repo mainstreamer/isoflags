@@ -1,5 +1,4 @@
-{
-  "countries": [
+[
     {
       "name": "Australia",
       "capital": "Canberra",
@@ -91,6 +90,18 @@
       "isoCode": "AS"
     },
     {
+      "name": "Antarctica",
+      "capital": "N/A",
+      "region": "Oceania",
+      "isoCode": "AQ"
+    },
+    {
+      "name": "Bouvet Island",
+      "capital": "N/A",
+      "region": "Oceania",
+      "isoCode": "BV"
+    },
+    {
       "name": "Cook Islands",
       "capital": "Avarua",
       "region": "Oceania",
@@ -103,10 +114,22 @@
       "isoCode": "PF"
     },
     {
+      "name": "French Southern Territories",
+      "capital": "Port-aux-Francais",
+      "region": "Oceania",
+      "isoCode": "TF"
+    },
+    {
       "name": "Guam",
-      "capital": "Hagåtña",
+      "capital": "Hagatna",
       "region": "Oceania",
       "isoCode": "GU"
+    },
+    {
+      "name": "Heard Island and McDonald Islands",
+      "capital": "N/A",
+      "region": "Oceania",
+      "isoCode": "HM"
     },
     {
       "name": "New Caledonia",
@@ -139,10 +162,22 @@
       "isoCode": "PN"
     },
     {
+      "name": "South Georgia and the South Sandwich Islands",
+      "capital": "King Edward Point",
+      "region": "Oceania",
+      "isoCode": "GS"
+    },
+    {
       "name": "Tokelau",
       "capital": "Nukunonu",
       "region": "Oceania",
       "isoCode": "TK"
+    },
+    {
+      "name": "United States Minor Outlying Islands",
+      "capital": "N/A",
+      "region": "Oceania",
+      "isoCode": "UM"
     },
     {
       "name": "Wallis and Futuna",
@@ -151,4 +186,3 @@
       "isoCode": "WF"
     }
   ]
-}

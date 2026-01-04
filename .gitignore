@@ -2,3 +2,7 @@ vendor
 composer.lock
 .idea/
 .phpunit.cache/
+.claude
+CLAUDE.md
+coverage/
+.php-cs-fixer.cache

@@ -1,10 +1,15 @@
-{
-  "countries": [
+[
     {
       "name": "Albania",
       "capital": "Tirana",
       "region": "Europe",
       "isoCode": "AL"
+    },
+    {
+      "name": "Aland Islands",
+      "capital": "Mariehamn",
+      "region": "Europe",
+      "isoCode": "AX"
     },
     {
       "name": "Andorra",
@@ -79,6 +84,12 @@
       "isoCode": "FI"
     },
     {
+      "name": "Faroe Islands",
+      "capital": "Torshavn",
+      "region": "Europe",
+      "isoCode": "FO"
+    },
+    {
       "name": "France",
       "capital": "Paris",
       "region": "Europe",
@@ -91,10 +102,22 @@
       "isoCode": "DE"
     },
     {
+      "name": "Gibraltar",
+      "capital": "Gibraltar",
+      "region": "Europe",
+      "isoCode": "GI"
+    },
+    {
       "name": "Greece",
       "capital": "Athens",
       "region": "Europe",
       "isoCode": "GR"
+    },
+    {
+      "name": "Guernsey",
+      "capital": "St. Peter Port",
+      "region": "Europe",
+      "isoCode": "GG"
     },
     {
       "name": "Hungary",
@@ -115,16 +138,22 @@
       "isoCode": "IE"
     },
     {
+      "name": "Isle of Man",
+      "capital": "Douglas",
+      "region": "Europe",
+      "isoCode": "IM"
+    },
+    {
       "name": "Italy",
       "capital": "Rome",
       "region": "Europe",
       "isoCode": "IT"
     },
     {
-      "name": "Kosovo",
-      "capital": "Pristina",
+      "name": "Jersey",
+      "capital": "St. Helier",
       "region": "Europe",
-      "isoCode": "XK"
+      "isoCode": "JE"
     },
     {
       "name": "Latvia",
@@ -247,6 +276,12 @@
       "isoCode": "ES"
     },
     {
+      "name": "Svalbard and Jan Mayen",
+      "capital": "Longyearbyen",
+      "region": "Europe",
+      "isoCode": "SJ"
+    },
+    {
       "name": "Sweden",
       "capital": "Stockholm",
       "region": "Europe",
@@ -277,4 +312,4 @@
       "isoCode": "VA"
     }
   ]
-}
+

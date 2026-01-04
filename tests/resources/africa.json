@@ -1,5 +1,4 @@
-{
-  "countries": [
+[
     {
       "name": "Algeria",
       "capital": "Algiers",
@@ -89,6 +88,12 @@
       "capital": "Cairo",
       "region": "Africa",
       "isoCode": "EG"
+    },
+    {
+      "name": "Western Sahara",
+      "capital": "El Aaiun",
+      "region": "Africa",
+      "isoCode": "EH"
     },
     {
       "name": "Equatorial Guinea",
@@ -241,6 +246,12 @@
       "isoCode": "RW"
     },
     {
+      "name": "Reunion",
+      "capital": "Saint-Denis",
+      "region": "Africa",
+      "isoCode": "RE"
+    },
+    {
       "name": "Sao Tome and Principe",
       "capital": "Sao Tome",
       "region": "Africa",
@@ -257,6 +268,12 @@
       "capital": "Victoria",
       "region": "Africa",
       "isoCode": "SC"
+    },
+    {
+      "name": "Saint Helena, Ascension and Tristan da Cunha",
+      "capital": "Jamestown",
+      "region": "Africa",
+      "isoCode": "SH"
     },
     {
       "name": "Sierra Leone",
@@ -313,6 +330,12 @@
       "isoCode": "UG"
     },
     {
+      "name": "Mayotte",
+      "capital": "Mamoudzou",
+      "region": "Africa",
+      "isoCode": "YT"
+    },
+    {
       "name": "Zambia",
       "capital": "Lusaka",
       "region": "Africa",
@@ -324,5 +347,5 @@
       "region": "Africa",
       "isoCode": "ZW"
     }
-  ]
-}
+]
+

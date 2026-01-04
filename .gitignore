@@ -8,3 +8,4 @@ coverage/
 .php-cs-fixer.cache
 .github/CODE*
 .github/LOCAL_COVERAGE_SETUP.md
+.github/RELEASE_AUTOMATION.md

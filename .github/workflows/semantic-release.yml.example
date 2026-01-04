@@ -1,0 +1,70 @@
+# Semantic Release Workflow (Optional)
+#
+# This workflow automatically determines version numbers based on commit messages
+# and creates releases when code is pushed to master.
+#
+# Requires conventional commits:
+# - feat: New feature (minor version bump)
+# - fix: Bug fix (patch version bump)
+# - BREAKING CHANGE: Breaking change (major version bump)
+#
+# To enable:
+# 1. Rename this file to semantic-release.yml
+# 2. Install: npm install --save-dev semantic-release @semantic-release/changelog @semantic-release/git
+# 3. Add .releaserc.json configuration
+# 4. Use conventional commit messages in PRs
+
+name: Semantic Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, pcov
+          coverage: pcov
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run tests with coverage
+        run: composer test
+
+      - name: Run QA checks
+        run: composer qa
+
+      - name: Install semantic-release
+        run: |
+          npm install -g \
+            semantic-release \
+            @semantic-release/changelog \
+            @semantic-release/git \
+            @semantic-release/github
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release

@@ -110,6 +110,32 @@ class FlagsGeneratorTest extends TestCase
     {
         $this->assertNull(FlagsGenerator::getFlagOrNull('AA'));
         $this->assertNull(FlagsGenerator::getFlagOrNull('123'));
+        $this->assertNull($this->sut->getEmojiFlagOrNull('ZZ'));
+    }
+
+    public function testInvalidCodeThrowsException(): void
+    {
+        $this->expectException(\Rteeom\FlagsGenerator\Exceptions\FlagsGeneratorException::class);
+        $this->expectExceptionMessage('Invalid country code given INVALID');
+
+        FlagsGenerator::getFlag('INVALID');
+    }
+
+    public function testDeprecatedGetEmojiFlagThrowsException(): void
+    {
+        $this->expectException(\Rteeom\FlagsGenerator\Exceptions\FlagsGeneratorException::class);
+        $this->expectExceptionMessage('Invalid country code given XX');
+
+        $this->sut->getEmojiFlag('XX');
+    }
+
+    public function testDeprecatedIsValidMethod(): void
+    {
+        $validator = new CountryCodeValidator();
+
+        $this->assertTrue($validator->isValid('us', CodeSet::ISO3166));
+        $this->assertFalse($validator->isValid('zz', CodeSet::ISO3166));
+        $this->assertTrue($validator->isValid('xk', CodeSet::EXTENDED));
     }
 
     /**

@@ -6,3 +6,5 @@ composer.lock
 CLAUDE.md
 coverage/
 .php-cs-fixer.cache
+.github/CODE*
+.github/LOCAL_COVERAGE_SETUP.md

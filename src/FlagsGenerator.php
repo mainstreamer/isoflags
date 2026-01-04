@@ -11,9 +11,6 @@ use Rteeom\FlagsGenerator\Exceptions\FlagsGeneratorException;
 
 class FlagsGenerator
 {
-    private const string ENCODING_UTF8 = 'UTF-8';
-    private const string ENCODING_HTML_ENTITIES = 'HTML-ENTITIES';
-
     /**
      * @deprecated Use static getFlag() instead. This will be removed in v2.0.
      * @see FlagsGenerator::getFlag()
@@ -39,17 +36,28 @@ class FlagsGenerator
         $isoCode = strtolower($isoCode);
 
         if (CountryCodeValidator::isValidCountryCode($isoCode, $codeSet)) {
-            $first = dechex(ord($isoCode[0]) + 127365);
-            $second = dechex(ord($isoCode[1]) + 127365);
+            $firstCodepoint = ord($isoCode[0]) + 127365;
+            $secondCodepoint = ord($isoCode[1]) + 127365;
 
-            return mb_convert_encoding(
-                string: "&#x$first;&#x$second;",
-                to_encoding: self::ENCODING_UTF8,
-                from_encoding: self::ENCODING_HTML_ENTITIES,
-            );
+            return self::codepointToUtf8($firstCodepoint) . self::codepointToUtf8($secondCodepoint);
         }
 
         return null;
+    }
+
+    /**
+     * Converts a Unicode codepoint to UTF-8 bytes.
+     * Regional Indicator Symbols are 4-byte UTF-8 characters (U+1F1E6 to U+1F1FF).
+     */
+    private static function codepointToUtf8(int $codepoint): string
+    {
+        return pack(
+            'C*',
+            0xF0 | ($codepoint >> 18),
+            0x80 | (($codepoint >> 12) & 0x3F),
+            0x80 | (($codepoint >> 6) & 0x3F),
+            0x80 | ($codepoint & 0x3F),
+        );
     }
 
     /**

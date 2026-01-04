@@ -9,7 +9,7 @@ use Rteeom\FlagsGenerator\Enums\ExtendedCode;
 use Rteeom\FlagsGenerator\Enums\IsoCode;
 use Rteeom\FlagsGenerator\Exceptions\FlagsGeneratorException;
 
-class FlagsGenerator
+final class FlagsGenerator
 {
     /**
      * @deprecated Use static getFlag() instead. This will be removed in v2.0.

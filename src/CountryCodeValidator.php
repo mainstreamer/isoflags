@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-declare(strict_types=1);
 
 namespace Rteeom\FlagsGenerator;
 
@@ -9,7 +8,7 @@ use Rteeom\FlagsGenerator\Enums\CodeSet;
 use Rteeom\FlagsGenerator\Enums\ExtendedCode;
 use Rteeom\FlagsGenerator\Enums\IsoCode;
 
-class CountryCodeValidator
+final class CountryCodeValidator
 {
     public static function isValidCountryCode(string $isoCountryCode, CodeSet $codeSet = CodeSet::ISO3166): bool
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Rteeom\FlagsGenerator;
 
@@ -10,7 +12,7 @@ class CountryCodeValidator
 {
     public static function isValidCountryCode(string $isoCountryCode, CodeSet $codeSet = CodeSet::ISO3166): bool
     {
-        return match($codeSet) {
+        return match ($codeSet) {
             CodeSet::EXTENDED => (bool) ExtendedCode::tryFrom($isoCountryCode),
             CodeSet::ISO3166 => (bool) IsoCode::tryFrom($isoCountryCode),
         };

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Rteeom\FlagsGenerator;
 
@@ -15,6 +17,7 @@ class FlagsGenerator
     /**
      * @deprecated Use static getFlag() instead. This will be removed in v2.0.
      * @see FlagsGenerator::getFlag()
+     *
      * @throws FlagsGeneratorException
      */
     public function getEmojiFlag(string $isoCountryCode, CodeSet $codeSet = CodeSet::ISO3166): string
@@ -40,7 +43,7 @@ class FlagsGenerator
             $second = dechex(ord($isoCode[1]) + 127365);
 
             return mb_convert_encoding(
-                string: "&#x$first;" . "&#x$second;",
+                string: "&#x$first;&#x$second;",
                 to_encoding: self::ENCODING_UTF8,
                 from_encoding: self::ENCODING_HTML_ENTITIES,
             );

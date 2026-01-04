@@ -1,4 +1,4 @@
-name: Tests
+name: CI Pipeline
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
       matrix:
         php-version: ['8.4']
 
-    name: PHP ${{ matrix.php-version }} Tests
+    name: PHP ${{ matrix.php-version }} Tests & Quality Checks
 
     steps:
     - uses: actions/checkout@v4
@@ -25,6 +25,7 @@ jobs:
         php-version: ${{ matrix.php-version }}
         extensions: mbstring, pcov
         coverage: pcov
+        tools: composer:v2
 
     - name: Validate composer.json
       run: composer validate --strict
@@ -39,10 +40,19 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      run: composer install --prefer-dist --no-progress --no-interaction
 
-    - name: Run test suite
-      run: ./vendor/bin/phpunit
+    - name: Run PHPUnit tests
+      run: composer test
+
+    - name: Run Psalm static analysis
+      run: composer psalm
+
+    - name: Check code style (PHP CS Fixer)
+      run: composer cs:check
+
+    - name: Check PSR-12 and line length (PHPCS)
+      run: composer phpcs
 
     - name: Generate coverage report
       run: ./vendor/bin/phpunit --coverage-clover coverage.xml

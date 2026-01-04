@@ -5,3 +5,5 @@ composer.lock
 .claude
 CLAUDE.md
 coverage/
+.php-cs-fixer.cache
+psalm-baseline.xml

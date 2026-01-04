@@ -1,4 +1,8 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+namespace Rteeom\FlagsGenerator\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Rteeom\FlagsGenerator\CountryCodeValidator;
@@ -9,7 +13,7 @@ class FlagsGeneratorTest extends TestCase
 {
     private const array FILES_MAP = [
         CodeSet::ISO3166->name => [
-            'africa.json', 'americas.json', 'asia.json', 'europe.json', 'oceania.json'
+            'africa.json', 'americas.json', 'asia.json', 'europe.json', 'oceania.json',
         ],
         CodeSet::EXTENDED->name => [
             'africa_extended.json',
@@ -29,14 +33,14 @@ class FlagsGeneratorTest extends TestCase
 
     /** @dataProvider extendedCodesDataProvider */
     /** @dataProvider isoCodesDataProvider */
-    public function test_flags_are_generated(string $isoCode, CodeSet $codeSet): void
+    public function testFlagsAreGenerated(string $isoCode, CodeSet $codeSet): void
     {
         $this->assertNotNull(FlagsGenerator::getFlagOrNull($isoCode, $codeSet));
         $this->assertNotNull($this->sut->getEmojiFlagOrNull($isoCode, $codeSet));
     }
 
     /** @dataProvider codeSetDataProvider */
-    public function test_GetAllAvailableCodes_returns_result(CodeSet $codeSet): void
+    public function testGetAllAvailableCodesReturnsResult(CodeSet $codeSet): void
     {
         $codes = FlagsGenerator::getAvailableCodes($codeSet);
         $this->assertIsArray($codes);
@@ -47,33 +51,36 @@ class FlagsGeneratorTest extends TestCase
         }
     }
 
-    public static function codeSetDataProvider(): Generator
+    public static function codeSetDataProvider(): \Generator
     {
         yield CodeSet::ISO3166->name => [CodeSet::ISO3166];
         yield CodeSet::EXTENDED->name => [CodeSet::EXTENDED];
     }
 
     /**
-     * @throws JsonException
+     * @throws \JsonException
      */
-    public static function isoCodesDataProvider(): Generator
+    public static function isoCodesDataProvider(): \Generator
     {
         foreach (self::FILES_MAP[CodeSet::ISO3166->name] as $fileName) {
             $countries = self::loadFromJson($fileName);
             foreach ($countries as $country) {
-                yield CodeSet::ISO3166->name . $country['isoCode'] => [strtolower($country['isoCode']), CodeSet::ISO3166];
+                yield CodeSet::ISO3166->name . $country['isoCode'] => [
+                    strtolower($country['isoCode']),
+                    CodeSet::ISO3166,
+                ];
             }
         }
     }
 
     /**
-     * @throws JsonException
+     * @throws \JsonException
      */
     private static function loadFromJson(string $fileName): array
     {
-        $path = __DIR__ . "/resources/" . $fileName;
+        $path = __DIR__ . '/resources/' . $fileName;
         if (!file_exists($path)) {
-            throw new RuntimeException("Resource missing: $fileName");
+            throw new \RuntimeException("Resource missing: $fileName");
         }
 
         return json_decode(
@@ -84,29 +91,33 @@ class FlagsGeneratorTest extends TestCase
     }
 
     /**
-     * @throws JsonException
+     * @throws \JsonException
      */
-    public static function extendedCodesDataProvider(): Generator
+    public static function extendedCodesDataProvider(): \Generator
     {
         foreach (self::FILES_MAP[CodeSet::EXTENDED->name] as $fileName) {
             $countries = self::loadFromJson($fileName);
             foreach ($countries as $country) {
-                yield CodeSet::EXTENDED->name . $country['isoCode'] => [strtolower($country['isoCode']), CodeSet::EXTENDED];
+                yield CodeSet::EXTENDED->name . $country['isoCode'] => [
+                    strtolower($country['isoCode']),
+                    CodeSet::EXTENDED,
+                ];
             }
         }
     }
 
-    public function test_invalid_code_returns_null(): void
+    public function testInvalidCodeReturnsNull(): void
     {
         $this->assertNull(FlagsGenerator::getFlagOrNull('AA'));
         $this->assertNull(FlagsGenerator::getFlagOrNull('123'));
     }
 
     /**
-     * @throws JsonException
+     * @throws \JsonException
+     *
      * @dataProvider codeSetDataProvider
      */
-    public function test_available_codes_count_matches_json_source(CodeSet $codeSet): void
+    public function testAvailableCodesCountMatchesJsonSource(CodeSet $codeSet): void
     {
         $jsonFiles = self::FILES_MAP[$codeSet->name];
         $totalJsonEntries = 0;
@@ -119,7 +130,7 @@ class FlagsGeneratorTest extends TestCase
         $this->assertCount(
             $totalJsonEntries,
             $generatedCodes,
-            "JSON entries: $totalJsonEntries. ENUM entries: " . count($generatedCodes)
+            "JSON entries: $totalJsonEntries. ENUM entries: " . count($generatedCodes),
         );
     }
 }

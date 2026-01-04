@@ -1,5 +1,4 @@
-{
-  "countries": [
+[
     {
       "name": "Antigua and Barbuda",
       "capital": "St. John's",
@@ -38,7 +37,7 @@
     },
     {
       "name": "Brazil",
-      "capital": "Brasília",
+      "capital": "Brasilia",
       "region": "Americas",
       "isoCode": "BR"
     },
@@ -56,7 +55,7 @@
     },
     {
       "name": "Colombia",
-      "capital": "Bogotá",
+      "capital": "Bogota",
       "region": "Americas",
       "isoCode": "CO"
     },
@@ -152,7 +151,7 @@
     },
     {
       "name": "Paraguay",
-      "capital": "Asunción",
+      "capital": "Asuncion",
       "region": "Americas",
       "isoCode": "PY"
     },
@@ -241,12 +240,6 @@
       "isoCode": "VG"
     },
     {
-      "name": "Caribbean Netherlands",
-      "capital": "Willemstad",
-      "region": "Americas",
-      "isoCode": "BQ"
-    },
-    {
       "name": "Cayman Islands",
       "capital": "George Town",
       "region": "Americas",
@@ -263,6 +256,12 @@
       "capital": "Stanley",
       "region": "Americas",
       "isoCode": "FK"
+    },
+    {
+      "name": "French Guiana",
+      "capital": "Cayenne",
+      "region": "Americas",
+      "isoCode": "GF"
     },
     {
       "name": "Greenland",
@@ -330,5 +329,5 @@
       "region": "Americas",
       "isoCode": "VI"
     }
-  ]
-}
+]
+

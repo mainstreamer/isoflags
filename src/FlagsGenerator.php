@@ -1,62 +1,68 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Rteeom\FlagsGenerator;
 
-use Rteeom\FlagsGenerator\Exceptions\IsoFlagGeneratorException;
+use Rteeom\FlagsGenerator\Enums\CodeSet;
+use Rteeom\FlagsGenerator\Enums\ExtendedCode;
+use Rteeom\FlagsGenerator\Enums\IsoCode;
+use Rteeom\FlagsGenerator\Exceptions\FlagsGeneratorException;
 
 class FlagsGenerator
 {
-    private const ENCODING_UTF8 = 'UTF-8';
-    private const ENCODING_HTML_ENTITIES = 'HTML-ENTITIES';
-    private CountryCodeValidator $validator;
+    private const string ENCODING_UTF8 = 'UTF-8';
+    private const string ENCODING_HTML_ENTITIES = 'HTML-ENTITIES';
 
-    public function __construct()
+    /**
+     * @deprecated Use static getFlag() instead. This will be removed in v2.0.
+     * @see FlagsGenerator::getFlag()
+     * @throws FlagsGeneratorException
+     */
+    public function getEmojiFlag(string $isoCountryCode, CodeSet $codeSet = CodeSet::ISO3166): string
     {
-        $this->validator = new CountryCodeValidator();
+        return self::getFlag($isoCountryCode, $codeSet);
     }
 
     /**
-     * @param string $isoCountryCode
-     * @return string
-     * @throws IsoFlagGeneratorException
+     * @deprecated Use static getFlagOrNull() instead. This will be removed in v2.0.
+     * @see FlagsGenerator::getFlagOrNull()
      */
-    public function getEmojiFlag(string $isoCountryCode): string
+    public function getEmojiFlagOrNull(string $isoCode, CodeSet $codeSet = CodeSet::ISO3166): ?string
     {
-        if (null === $flag = $this->getEmojiFlagOrNull($isoCountryCode)) {
-            throw new IsoFlagGeneratorException($isoCountryCode);
-        }
-
-        return $flag;
+        return self::getFlagOrNull($isoCode, $codeSet);
     }
 
-    public function getEmojiFlagOrNull(string $isoCountryCode): ?string
+    public static function getFlagOrNull(string $isoCode, CodeSet $codeSet = CodeSet::ISO3166): ?string
     {
-        if ($this->validator->isValid($isoCountryCode)) {
-            $first = dechex(ord($isoCountryCode[0])+127365);
-            $second = dechex(ord($isoCountryCode[1])+127365);
+        $isoCode = strtolower($isoCode);
+
+        if (CountryCodeValidator::isValidCountryCode($isoCode, $codeSet)) {
+            $first = dechex(ord($isoCode[0]) + 127365);
+            $second = dechex(ord($isoCode[1]) + 127365);
 
             return mb_convert_encoding(
-                "&#x$first;"."&#x$second;",
-                self::ENCODING_UTF8,
-                self::ENCODING_HTML_ENTITIES
+                string: "&#x$first;" . "&#x$second;",
+                to_encoding: self::ENCODING_UTF8,
+                from_encoding: self::ENCODING_HTML_ENTITIES,
             );
         }
 
         return null;
     }
 
-    public static function getAvailableCodes(): array
+    /**
+     * @throws FlagsGeneratorException
+     */
+    public static function getFlag(string $isoCode, CodeSet $codeSet = CodeSet::ISO3166): string
     {
-        $result = [];
-        foreach (CountryCodeValidator::PATTERNS as $pattern) {
-            $prefix = $pattern[0];
-            // remove first letter and parentheses, split by | symbol
-            $options = explode('|', str_replace(['(',')'], [''], substr($pattern, 1)));
-            foreach ($options as $letter) {
-                $result[] = $prefix.$letter;
-            }
-        }
+        return self::getFlagOrNull($isoCode, $codeSet)
+            ?? throw new FlagsGeneratorException($isoCode);
+    }
 
-        return $result;
+    public static function getAvailableCodes(CodeSet $codeSet = CodeSet::ISO3166): array
+    {
+        return match ($codeSet) {
+            CodeSet::ISO3166 => array_column(IsoCode::cases(), 'value'),
+            CodeSet::EXTENDED => array_column(ExtendedCode::cases(), 'value'),
+        };
     }
 }

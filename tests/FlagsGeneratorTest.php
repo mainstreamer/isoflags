@@ -1,67 +1,125 @@
 <?php declare(strict_types=1);
-header('Content-Type: text/html; charset=utf-8');
 
 use PHPUnit\Framework\TestCase;
 use Rteeom\FlagsGenerator\CountryCodeValidator;
+use Rteeom\FlagsGenerator\Enums\CodeSet;
 use Rteeom\FlagsGenerator\FlagsGenerator;
 
 class FlagsGeneratorTest extends TestCase
 {
-    private const COUNTRY_FILES = [
-        'africa.json',
-        'americas.json',
-        'asia.json',
-        'europe.json',
-        'oceania.json',
+    private const array FILES_MAP = [
+        CodeSet::ISO3166->name => [
+            'africa.json', 'americas.json', 'asia.json', 'europe.json', 'oceania.json'
+        ],
+        CodeSet::EXTENDED->name => [
+            'africa_extended.json',
+            'americas.json',
+            'asia_extended.json',
+            'europe_extended.json',
+            'oceania.json',
+        ],
     ];
 
-    private FlagsGenerator $flagsGenerator;
-    private CountryCodeValidator $validator;
+    private FlagsGenerator $sut;
 
-    public function __construct(string $name)
+    public function setUp(): void
     {
-        parent::__construct($name);
-        $this->flagsGenerator = new FlagsGenerator();
-        $this->validator = new CountryCodeValidator();
+        $this->sut = new FlagsGenerator();
     }
 
-    public function testFlagsGeneration(): void
+    /** @dataProvider extendedCodesDataProvider */
+    /** @dataProvider isoCodesDataProvider */
+    public function test_flags_are_generated(string $isoCode, CodeSet $codeSet): void
     {
-        foreach (self::COUNTRY_FILES as $fileName) {
-            self::assertFileExists("tests/countries/$fileName");
-            ['countries' => $countries] = json_decode(file_get_contents("tests/countries/$fileName"), true);
+        $this->assertNotNull(FlagsGenerator::getFlagOrNull($isoCode, $codeSet));
+        $this->assertNotNull($this->sut->getEmojiFlagOrNull($isoCode, $codeSet));
+    }
 
+    /** @dataProvider codeSetDataProvider */
+    public function test_GetAllAvailableCodes_returns_result(CodeSet $codeSet): void
+    {
+        $codes = FlagsGenerator::getAvailableCodes($codeSet);
+        $this->assertIsArray($codes);
+        $this->assertNotEmpty($codes, "Empty available codes for {$codeSet->name}");
+
+        foreach ($codes as $code) {
+            self::assertTrue(CountryCodeValidator::isValidCountryCode($code, $codeSet));
+        }
+    }
+
+    public static function codeSetDataProvider(): Generator
+    {
+        yield CodeSet::ISO3166->name => [CodeSet::ISO3166];
+        yield CodeSet::EXTENDED->name => [CodeSet::EXTENDED];
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public static function isoCodesDataProvider(): Generator
+    {
+        foreach (self::FILES_MAP[CodeSet::ISO3166->name] as $fileName) {
+            $countries = self::loadFromJson($fileName);
             foreach ($countries as $country) {
-                self::assertNotNull(
-                    $this->flagsGenerator->getEmojiFlagOrNull(strtolower($country['isoCode'])),
-                    sprintf(
-                        'Failed to generate emoji flag for isoCode:%s country:%s',
-                        $country['isoCode'],
-                        $country['name']
-                    )
-                );
-
-                echo sprintf(
-                    '%s%s  %s %s',
-                    PHP_EOL,
-                    $country['isoCode'],
-                    $this->flagsGenerator->getEmojiFlagOrNull(strtolower($country['isoCode'])),
-                    $country['name'],
-                );
+                yield CodeSet::ISO3166->name . $country['isoCode'] => [strtolower($country['isoCode']), CodeSet::ISO3166];
             }
-
-            echo sprintf('%s%s',
-                PHP_EOL,
-                '----------------',
-            );
         }
     }
 
-    public function testGetAllAvailableCodes(): void
+    /**
+     * @throws JsonException
+     */
+    private static function loadFromJson(string $fileName): array
     {
-        self::assertNotEmpty(FlagsGenerator::getAvailableCodes());
-        foreach (FlagsGenerator::getAvailableCodes() as $code) {
-            self::assertTrue($this->validator->isValid($code));
+        $path = __DIR__ . "/resources/" . $fileName;
+        if (!file_exists($path)) {
+            throw new RuntimeException("Resource missing: $fileName");
         }
+
+        return json_decode(
+            json: file_get_contents($path),
+            associative: true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public static function extendedCodesDataProvider(): Generator
+    {
+        foreach (self::FILES_MAP[CodeSet::EXTENDED->name] as $fileName) {
+            $countries = self::loadFromJson($fileName);
+            foreach ($countries as $country) {
+                yield CodeSet::EXTENDED->name . $country['isoCode'] => [strtolower($country['isoCode']), CodeSet::EXTENDED];
+            }
+        }
+    }
+
+    public function test_invalid_code_returns_null(): void
+    {
+        $this->assertNull(FlagsGenerator::getFlagOrNull('AA'));
+        $this->assertNull(FlagsGenerator::getFlagOrNull('123'));
+    }
+
+    /**
+     * @throws JsonException
+     * @dataProvider codeSetDataProvider
+     */
+    public function test_available_codes_count_matches_json_source(CodeSet $codeSet): void
+    {
+        $jsonFiles = self::FILES_MAP[$codeSet->name];
+        $totalJsonEntries = 0;
+        foreach ($jsonFiles as $file) {
+            $totalJsonEntries += count(self::loadFromJson($file));
+        }
+
+        $generatedCodes = FlagsGenerator::getAvailableCodes($codeSet);
+
+        $this->assertCount(
+            $totalJsonEntries,
+            $generatedCodes,
+            "JSON entries: $totalJsonEntries. ENUM entries: " . count($generatedCodes)
+        );
     }
 }
